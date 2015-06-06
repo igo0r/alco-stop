@@ -24,8 +24,7 @@ class DrinkAdmin extends Admin
     {
         $datagridMapper
             ->add('title')
-            ->add('author')
-        ;
+            ->add('author');
     }
 
     // Fields to be shown on lists
@@ -34,7 +33,6 @@ class DrinkAdmin extends Admin
         $listMapper
             ->addIdentifier('title')
             ->add('slug')
-            ->add('author')
-        ;
+            ->add('author');
     }
 }

@@ -37,7 +37,7 @@ class AlcoStage
     private $ethylVolume;
 
     /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="alcoLevelId")
+     * @ORM\OneToMany(targetEntity="AlcoStop\Bundle\UserBundle\Entity\User", mappedBy="alcoLevelId")
      */
     private $userId;
 

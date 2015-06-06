@@ -37,7 +37,7 @@ class Drink
     private $strength;
 
     /**
-     * @ORM\OneToMany(targetEntity="DrinkActivity", mappedBy="drinkId")
+     * @ORM\OneToMany(targetEntity="AlcoStop\Bundle\PartyTimeBundle\Entity\DrinkActivity", mappedBy="drinkId")
      */
     private $drinkActivityId;
 

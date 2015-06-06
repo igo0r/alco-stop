@@ -1,6 +1,6 @@
 <?php
 
-namespace AlcoStop\Bundle\DrinkBundle\Entity;
+namespace AlcoStop\Bundle\PartyTimeBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,13 +22,13 @@ class DrinkActivity
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Drink", inversedBy="alcoLevelId")
+     * @ORM\ManyToOne(targetEntity="AlcoStop\Bundle\DrinkBundle\Entity\Drink", inversedBy="drinkActivityId")
      * @ORM\JoinColumn(name="drink_id", referencedColumnName="id")
      */
     private $drinkId;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="drinkActivityId")
+     * @ORM\ManyToOne(targetEntity="AlcoStop\Bundle\UserBundle\Entity\User", inversedBy="drinkActivityId")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $userId;

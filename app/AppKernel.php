@@ -15,6 +15,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
             // Add your dependencies
@@ -35,6 +36,8 @@ class AppKernel extends Kernel
             //User Login managment
             new FOS\UserBundle\FOSUserBundle(),
             new Sonata\UserBundle\SonataUserBundle('FOSUserBundle'),
+            new AlcoStop\Bundle\UserBundle\UserBundle(),
+            new AlcoStop\Bundle\PartyTimeBundle\PartyTimeBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

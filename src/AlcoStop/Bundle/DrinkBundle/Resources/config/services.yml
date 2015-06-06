@@ -1,5 +1,5 @@
 services:
-    sonata.admin.post:
+    alco_stop.admin.drink:
         class: AlcoStop\Bundle\DrinkBundle\Admin\DrinkAdmin
         tags:
             - { name: sonata.admin, manager_type: orm, group: "Content", label: "Drink" }

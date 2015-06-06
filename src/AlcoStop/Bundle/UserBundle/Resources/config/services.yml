@@ -1,0 +1,17 @@
+services:
+    user.security.drink_activity_voter:
+        class:      AlcoStop\Bundle\UserBundle\Voter\DrinkActivityVoter
+        public:     false
+        tags:
+           - { name: security.voter }
+    sonata.user.admin.group:
+        abstract: true
+        public: false
+    alco_stop.admin.user:
+        class: AlcoStop\Bundle\UserBundle\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Admin", label: "User" }
+        arguments:
+            - ~
+            - AlcoStop\Bundle\UserBundle\Entity\User
+            - ~

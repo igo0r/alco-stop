@@ -1,9 +1,11 @@
 <?php
 
-namespace AlcoStop\Bundle\DrinkBundle\Entity;
+namespace AlcoStop\Bundle\UserBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Sonata\UserBundle\Entity\BaseUser;
+use AlcoStop\Bundle\DrinkBundle\Entity\AlcoStage;
 
 /**
  * User
@@ -11,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table()
  * @ORM\Entity()
  */
-class User
+class User extends BaseUser
 {
     /**
      * @var integer
@@ -20,7 +22,7 @@ class User
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -43,13 +45,13 @@ class User
      */
 
     /**
-     * @ORM\ManyToOne(targetEntity="AlcoStage", inversedBy="userId")
+     * @ORM\ManyToOne(targetEntity="AlcoStop\Bundle\DrinkBundle\Entity\AlcoStage", inversedBy="userId")
      * @ORM\JoinColumn(name="alco_stage_id", referencedColumnName="id")
      */
     private $alcoLevelId;
 
     /**
-     * @ORM\OneToMany(targetEntity="DrinkActivity", mappedBy="userId")
+     * @ORM\OneToMany(targetEntity="AlcoStop\Bundle\PartyTimeBundle\Entity\DrinkActivity", mappedBy="userId")
      */
     private $drinkActivityId;
 

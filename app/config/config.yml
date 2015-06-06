@@ -10,7 +10,7 @@ parameters:
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -59,6 +59,8 @@ doctrine:
         user:     "%database_user%"
         password: "%database_password%"
         charset:  UTF8
+        types:
+            json: Sonata\Doctrine\Types\JsonType
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
         #     e.g. database_path: "%kernel.root_dir%/data/data.db3"
@@ -70,6 +72,12 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+
+doctrine_migrations:
+    dir_name: %kernel.root_dir%/DoctrineMigrations
+    namespace: Application\Migrations
+    table_name: migration_versions
+    name: Application Migrations
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -88,5 +96,26 @@ sonata_block:
         # Your other blocks
 
 sonata_admin:
-    title:      Acme Demo Bundle
+    title:      Alcohol control
     title_logo: bundles/acmedemo/img/fancy_acme_logo.png
+    security:
+        handler: sonata.admin.security.handler.noop
+    dashboard:
+        groups:
+            Content:
+                roles: [ ROLE_USER ]
+            Admin:
+                roles: [ ROLE_ADMIN ]
+#sonata_user:
+ #   security_acl: true
+ #   manager_type: orm
+
+fos_user:
+    db_driver:      orm
+    firewall_name:  main
+    user_class:     AlcoStop\Bundle\UserBundle\Entity\User
+    group:
+        group_class:   Application\Sonata\UserBundle\Entity\Group
+        group_manager: sonata.user.orm.group_manager
+    service:
+        user_manager: sonata.user.orm.user_manager

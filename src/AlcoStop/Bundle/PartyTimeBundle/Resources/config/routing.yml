@@ -1,0 +1,3 @@
+party_time_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: PartyTimeBundle:Default:index }

@@ -1,0 +1,9 @@
+services:
+    alco_stop.admin.party_time:
+        class: AlcoStop\Bundle\PartyTimeBundle\Admin\PartyTimeAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Party activities" }
+        arguments:
+            - ~
+            - AlcoStop\Bundle\PartyTimeBundle\Entity\DrinkActivity
+            - ~
