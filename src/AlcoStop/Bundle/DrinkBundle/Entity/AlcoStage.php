@@ -97,4 +97,9 @@ class AlcoStage
     {
         $this->ethylVolume = $ethylVolume;
     }
+
+    public function __toString()
+    {
+        return $this->getName();
+    }
 }

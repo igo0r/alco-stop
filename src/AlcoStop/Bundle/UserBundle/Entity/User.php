@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Sonata\UserBundle\Entity\BaseUser;
 use AlcoStop\Bundle\DrinkBundle\Entity\AlcoStage;
+use Sonata\UserBundle\Model\UserInterface;
 
 /**
  * User
@@ -23,21 +24,6 @@ class User extends BaseUser
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="first_name", type="string", length=255)
-     */
-    private $firstName;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="last_name", type="string", length=255)
-     */
-    private $lastName;
-
     /**
      * @var float
      *
@@ -66,7 +52,7 @@ class User extends BaseUser
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -105,35 +91,22 @@ class User extends BaseUser
         $this->drinkActivityId = $drinkActivityId;
     }
 
-    /**
-     * @return string
-     */
-    public function getFirstName()
+    public function __toString()
     {
-        return $this->firstName;
+        return $this->getFirstname() . ' ' . $this->getLastName();
     }
 
     /**
-     * @param string $firstName
+     * Returns the gender list
+     *
+     * @return array
      */
-    public function setFirstName($firstName)
+    public static function getGenderList()
     {
-        $this->firstName = $firstName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * @param string $lastName
-     */
-    public function setLastName($lastName)
-    {
-        $this->lastName = $lastName;
+        return array(
+            UserInterface::GENDER_UNKNOWN => '',
+            UserInterface::GENDER_FEMALE  => 'Female',
+            UserInterface::GENDER_MALE    => 'Male',
+        );
     }
 }

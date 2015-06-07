@@ -15,52 +15,91 @@ class PartyTimeAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('title', 'text', array('label' => 'Post Title'))
-            ->add('author', 'entity', array('class' => 'Acme\DemoBundle\Entity\User'))
-            ->add('body') //if no type is specified, SonataAdminBundle tries to guess it
-        ;
+            ->add(
+                'drinkId',
+                'sonata_type_model',
+                [
+                    'class'        => 'DrinkBundle:Drink',
+                    'multiple'     => false,
+                    'by_reference' => false,
+                    'label'        => 'Drinks',
+                    'btn_add'      => false
+                ]
+            )
+            ->add(
+                'userId',
+                'sonata_type_model',
+                [
+                    'class'   => 'AlcoStop\Bundle\UserBundle\Entity\User',
+                    'btn_add' => false,
+                    'label'   => 'User name'
+                ]
+            )
+            ->add('volume', null, ['required' => true])
+            ->add(
+                'issueDate',
+                'sonata_type_date_picker',
+                [
+                    'datepicker_use_button' => false,
+                    'required'              => true,
+                    'dp_use_current'        => true,
+                    'format'                => 'dd-MM-yyyy',
+                    'dp_show_today'         => true
+                ]
+            );
     }
 
     // Fields to be shown on filter forms
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('title')
-            ->add('author');
+            ->add('drinkId')
+            ->add('userId');
     }
 
     // Fields to be shown on lists
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->addIdentifier('title')
-            ->add('slug')
-            ->add('author');
+            ->addIdentifier('userId', null, ['label' => 'User names'])
+            ->add('drinkId', null, ['label' => 'Drinks'])
+            ->add('volume', null, ['label' => 'Volume (Liters)'])
+            ->add('issueDate', null, ['label' => 'Party date', 'format' => 'd-M-y',])
+            ->add(
+                '_action',
+                'input',
+                [
+                    'actions' => [
+                        'show'   => [],
+                        'edit'   => [],
+                        'delete' => [],
+                    ]
+                ]
+            );
     }
+    /*
+        public function createQuery($context = 'list')
+        {
+            $queryBuilder = $this->getModelManager()->getEntityManager($this->getClass())->createQueryBuilder();
 
-    public function createQuery($context = 'list')
-    {
-        $queryBuilder = $this->getModelManager()->getEntityManager($this->getClass())->createQueryBuilder();
+            //if is logged admin, show all data
+            if ($this->securityContext->isGranted('ROLE_ADMIN')) {
+                $queryBuilder->select('p')
+                    ->from($this->getClass(), 'p');
+            } else {
+                //for other users, show only data, which belongs to them
+                $adminId = $this->securityContext->getToken()->getUser()->getAdminId();
 
-        //if is logged admin, show all data
-        if ($this->securityContext->isGranted('ROLE_ADMIN')) {
-            $queryBuilder->select('p')
-                ->from($this->getClass(), 'p')
-            ;
-        } else {
-            //for other users, show only data, which belongs to them
-            $adminId = $this->securityContext->getToken()->getUser()->getAdminId();
+                $queryBuilder->select('p')
+                    ->from($this->getClass(), 'p')
+                    ->where('p.adminId=:adminId')
+                    ->setParameter('adminId', $adminId, Type::INTEGER);
+            }
 
-            $queryBuilder->select('p')
-                ->from($this->getClass(), 'p')
-                ->where('p.adminId=:adminId')
-                ->setParameter('adminId', $adminId, Type::INTEGER)
-            ;
-        }
+            $proxyQuery = new ProxyQuery($queryBuilder);
 
-        $proxyQuery = new ProxyQuery($queryBuilder);
-        return $proxyQuery;
-    }
+            return $proxyQuery;
+        }*/
 
     /**
      * Security Context

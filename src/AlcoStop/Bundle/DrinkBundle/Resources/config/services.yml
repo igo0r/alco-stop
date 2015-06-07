@@ -2,8 +2,16 @@ services:
     alco_stop.admin.drink:
         class: AlcoStop\Bundle\DrinkBundle\Admin\DrinkAdmin
         tags:
-            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Drink" }
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Drinks" }
         arguments:
             - ~
             - AlcoStop\Bundle\DrinkBundle\Entity\Drink
+            - ~
+    alco_stop.admin.alco_stage:
+        class: AlcoStop\Bundle\DrinkBundle\Admin\AlcoStageAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: "Content", label: "Alcohol stages" }
+        arguments:
+            - ~
+            - AlcoStop\Bundle\DrinkBundle\Entity\AlcoStage
             - ~

@@ -7,14 +7,14 @@ use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
-class DrinkAdmin extends Admin
+class AlcoStageAdmin extends Admin
 {
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->add('name', null, ['label' => 'Name of the drink'])
-            ->add('strength', null, ['label' => '% of alcohol strength']);
+            ->add('name', null, ['label' => 'Name of the stage'])
+            ->add('ethylVolume', null, ['label' => 'Ethyl amount per year']);
     }
 
     // Fields to be shown on filter forms
@@ -22,7 +22,7 @@ class DrinkAdmin extends Admin
     {
         $datagridMapper
             ->add('name')
-            ->add('strength');
+            ->add('ethylVolume');
     }
 
     // Fields to be shown on lists
@@ -30,7 +30,7 @@ class DrinkAdmin extends Admin
     {
         $listMapper
             ->addIdentifier('name')
-            ->add('strength', null, ['label' => '% of alcohol strength'])
+            ->add('ethylVolume', null, ['label' => 'Ethyl amount per year'])
             ->add(
                 '_action',
                 'input',

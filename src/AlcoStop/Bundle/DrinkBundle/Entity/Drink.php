@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Drink
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Doctrine\Bundle\DoctrineBundle\Entity\DrinkRepository")
+ * @ORM\Entity(repositoryClass="AlcoStop\Bundle\DrinkBundle\Entity\Repositories\DrinkRepository")
  */
 class Drink
 {
@@ -119,5 +119,10 @@ class Drink
     public function setDrinkActivityId($drinkActivityId)
     {
         $this->drinkActivityId = $drinkActivityId;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 }
