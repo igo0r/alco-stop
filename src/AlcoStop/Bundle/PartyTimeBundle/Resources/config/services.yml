@@ -7,3 +7,8 @@ services:
             - ~
             - AlcoStop\Bundle\PartyTimeBundle\Entity\DrinkActivity
             - ~
+    alco_stop.service.party_time:
+        class: AlcoStop\Bundle\PartyTimeBundle\Service\PartyTimeService
+        arguments:
+            - @doctrine.orm.entity_manager
+            - @security.token_storage

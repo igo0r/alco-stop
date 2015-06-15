@@ -2,18 +2,28 @@
 
 namespace AlcoStop\Bundle\PartyTimeBundle\Admin;
 
+use AlcoStop\Bundle\PartyTimeBundle\Service\PartyTimeService;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\DoctrineORMAdminBundle\Datagrid\ProxyQuery;
-use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class PartyTimeAdmin extends Admin
 {
     // Fields to be shown on create/edit forms
     protected function configureFormFields(FormMapper $formMapper)
     {
+        //var_dump();die;
+        /** @var AuthorizationChecker $token */
+        $authChecker = $this->get('security.authorization_checker');
+        var_dump($authChecker->isGranted('EDIT', $formMapper->getAdmin()->getSubject()));die;
+        if ($authChecker->isGranted('EDIT', $formMapper->getAdmin()->getSubject())) {
+            throw new AccessDeniedException;
+        }
+
         $formMapper
             ->add(
                 'drinkId',
@@ -77,38 +87,25 @@ class PartyTimeAdmin extends Admin
                 ]
             );
     }
-    /*
-        public function createQuery($context = 'list')
-        {
-            $queryBuilder = $this->getModelManager()->getEntityManager($this->getClass())->createQueryBuilder();
 
-            //if is logged admin, show all data
-            if ($this->securityContext->isGranted('ROLE_ADMIN')) {
-                $queryBuilder->select('p')
-                    ->from($this->getClass(), 'p');
-            } else {
-                //for other users, show only data, which belongs to them
-                $adminId = $this->securityContext->getToken()->getUser()->getAdminId();
+    public function createQuery($context = 'list')
+    {
+        /** @var PartyTimeService $partyTimeService */
+        $partyTimeService = $this->get('alco_stop.service.party_time');
+        $proxyQuery       = new ProxyQuery($partyTimeService->getActivitiesListQuery());
 
-                $queryBuilder->select('p')
-                    ->from($this->getClass(), 'p')
-                    ->where('p.adminId=:adminId')
-                    ->setParameter('adminId', $adminId, Type::INTEGER);
-            }
-
-            $proxyQuery = new ProxyQuery($queryBuilder);
-
-            return $proxyQuery;
-        }*/
+        return $proxyQuery;
+    }
 
     /**
-     * Security Context
-     * @var Security
+     * Get a service
+     *
+     * @param string $id The service ID
+     *
+     * @return object The associated service
      */
-    protected $securityContext;
-
-    public function setSecurityContext(Security $securityContext)
+    public function get($id)
     {
-        $this->securityContext = $securityContext;
+        return $this->getConfigurationPool()->getContainer()->get($id);
     }
 }
